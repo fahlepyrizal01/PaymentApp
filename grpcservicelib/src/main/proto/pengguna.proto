@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package pengguna;
+
+service penggunaService {
+    rpc onePengguna(penggunaData) returns (penggunaData) {}
+    rpc loginPengguna (penggunaData) returns (penggunaData){}
+    rpc registerPengguna (penggunaData) returns (penggunaData){}
+}
+
+message penggunaData {
+    int64 id_pengguna = 1;
+    string nama_pengguna = 2;
+    string password = 3;
+    string nomor_telepon = 4;
+    string alamat = 5;
+    string email = 6;
+    float balance = 7;
+    string url_foto_profil = 8;
+    repeated string errors_message = 9;
+}

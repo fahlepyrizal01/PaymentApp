@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package transaksi;
+
+service transaksiService {
+    rpc allTransaksi(transaksiData) returns (stream transaksiData) {}
+    rpc addTransaksi (transaksiData) returns (transaksiData){}
+}
+
+message transaksiData {
+    int64 id_transaksi = 1;
+    int64 id_pengirim = 2;
+    int64 id_penerima = 3;
+    float nominal = 4;
+    string waktu_transaksi = 5;
+    string nama_pengirim = 6;
+    string nama_penerima = 7;
+    repeated string errors_message = 8;
+}
