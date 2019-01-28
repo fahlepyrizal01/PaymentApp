@@ -1,15 +1,22 @@
 package com.example.paymentapp.fragment
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.grpcservicelib.transaction_grpc.SendGetAllTransaction
+import com.example.modellib.StaticVariable
 import com.example.modellib.networkConfig.NetworkConfig
 import com.example.modellib.transaction.TransactionDataModel
 import com.example.paymentapp.R
+import com.example.paymentapp.adapter.HistoryTransactionAdapter
 import kotlinx.android.synthetic.main.fragment_history_transaction.*
 import java.text.DecimalFormat
 import java.util.ArrayList
@@ -20,7 +27,9 @@ class HistoryTransactionFragment : Fragment(),
     SendGetAllTransaction.OnSendGetAllTransactionListener{
 
     var errorsLog = ""
-    private val networkConfig = NetworkConfig.newBuilder().setUrl("192.168.43.95").setPort(8000)
+    private lateinit var ctx : Context
+    private val networkConfig = NetworkConfig.newBuilder().setUrl(StaticVariable.URL)
+        .setPort(StaticVariable.PORT)
 
     companion object {
         fun newInstance() = HistoryTransactionFragment()
@@ -37,6 +46,8 @@ class HistoryTransactionFragment : Fragment(),
 
     private fun initiationWidget(v: View) {
 //        button.setOnClickListener(this)
+        ctx = activity as Activity
+        getAllTransaction()
     }
 
     override fun onRefresh() {
@@ -45,9 +56,7 @@ class HistoryTransactionFragment : Fragment(),
 
     override fun onClick(v: View?) {
         when (v){
-//            button -> {
-//                getAllTransaction()
-//            }
+
         }
 
         errorsLog = ""
@@ -58,24 +67,13 @@ class HistoryTransactionFragment : Fragment(),
             errorsLog += error + "\n"
         }
 
-//        textView20.text = if (errorsLog != "") errorsLog else "No Error, data is Ok"
+        if (errorsLog != ""){
+            Toast.makeText(activity,errorsLog, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onGetAllTransaction(transactions: ArrayList<TransactionDataModel>) {
-        var datas = "Transactions List\n"
-        for (data in transactions){
-            datas += "${data.IdTransaksi}\n"
-            datas += "${data.IdPengirim}\n"
-            datas += "${data.IdPenerima}\n"
-            val formatter = DecimalFormat("#,###,###")
-            val nominal = formatter.format(data.Nominal)
-            datas += "${nominal}\n"
-            datas += "${data.WaktuTransaksi}\n"
-            datas += "${data.NamaPengirim}\n"
-            datas += "${data.NamaPenerima}\n"
-            datas += "\n"
-        }
-//        textView17.text =  datas
+        setAdapter(transactions, ctx, recyclerViewHistoryTransaction)
     }
 
     override fun onErrorGetAllTransaction(errors: MutableList<String>) {
@@ -90,6 +88,13 @@ class HistoryTransactionFragment : Fragment(),
             .setKey("x9O1LkXjyxpRiyhNRX8T", "auth5cur3")
             .setOnSendGetAllTransactionListener(this)
             .send()
+    }
+
+    fun setAdapter (result : ArrayList<TransactionDataModel>, ctx : Context, rvTransaction : RecyclerView){
+        val adapter = HistoryTransactionAdapter(ctx, result)
+        rvTransaction.layoutManager = LinearLayoutManager(ctx)
+        rvTransaction.adapter = adapter
+        adapter.notifyDataSetChanged()
     }
 
 }
