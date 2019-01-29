@@ -33,6 +33,7 @@ class HistoryTransactionAdapter(private val context: Context, var listTransactio
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.textViewTimeTransaction.text = listTransactionData[position].WaktuTransaksi
         holder.textViewIDTransaction.text = listTransactionData[position].IdTransaksi.toString()
         holder.textViewIDSender.text = listTransactionData[position].IdPengirim.toString()
         holder.textViewFullNameSender.text = listTransactionData[position].NamaPengirim
@@ -44,6 +45,7 @@ class HistoryTransactionAdapter(private val context: Context, var listTransactio
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        val textViewTimeTransaction = itemView.findViewById(R.id.textViewTimeTransaction) as TextView
         val textViewIDTransaction = itemView.findViewById(R.id.textViewIDTransaction) as TextView
         val textViewIDSender = itemView.findViewById(R.id.textViewIDSender) as TextView
         val textViewFullNameSender = itemView.findViewById(R.id.textViewFullNameSender) as TextView

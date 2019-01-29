@@ -17,14 +17,14 @@ import com.example.modellib.networkConfig.NetworkConfig
 import com.example.modellib.transaction.TransactionDataModel
 import com.example.paymentapp.R
 import com.example.paymentapp.adapter.HistoryTransactionAdapter
+import com.example.paymentapp.res.SharedPrefManager
 import kotlinx.android.synthetic.main.fragment_history_transaction.*
-import java.text.DecimalFormat
 import java.util.ArrayList
 
 class HistoryTransactionFragment : Fragment(),
     SwipeRefreshLayout.OnRefreshListener,
-    View.OnClickListener,
     SendGetAllTransaction.OnSendGetAllTransactionListener{
+
 
     var errorsLog = ""
     private lateinit var ctx : Context
@@ -45,24 +45,16 @@ class HistoryTransactionFragment : Fragment(),
     }
 
     private fun initiationWidget(v: View) {
-//        button.setOnClickListener(this)
         ctx = activity as Activity
-        getAllTransaction()
+        getAllTransaction(SharedPrefManager.getIdUser(ctx))
     }
 
     override fun onRefresh() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        getAllTransaction(SharedPrefManager.getIdUser(ctx))
+        swipeRefreshLayoutHistoryTransaction.isRefreshing = !swipeRefreshLayoutHistoryTransaction.isRefreshing
     }
 
-    override fun onClick(v: View?) {
-        when (v){
-
-        }
-
-        errorsLog = ""
-    }
-
-    fun showError(errors: MutableList<String>){
+    private fun showError(errors: MutableList<String>){
         for (error in errors) {
             errorsLog += error + "\n"
         }
@@ -80,21 +72,19 @@ class HistoryTransactionFragment : Fragment(),
         showError(errors)
     }
 
-    fun getAllTransaction(){
-
+    private fun getAllTransaction(idUser : Long){
         SendGetAllTransaction.newBuilder()
-            .setIdPengguna(148591304110702511)
+            .setIdPengguna(idUser)
             .setNetworkConfig(networkConfig)
             .setKey("x9O1LkXjyxpRiyhNRX8T", "auth5cur3")
             .setOnSendGetAllTransactionListener(this)
             .send()
     }
 
-    fun setAdapter (result : ArrayList<TransactionDataModel>, ctx : Context, rvTransaction : RecyclerView){
+    private fun setAdapter (result : ArrayList<TransactionDataModel>, ctx : Context, rvTransaction : RecyclerView){
         val adapter = HistoryTransactionAdapter(ctx, result)
         rvTransaction.layoutManager = LinearLayoutManager(ctx)
         rvTransaction.adapter = adapter
         adapter.notifyDataSetChanged()
     }
-
 }

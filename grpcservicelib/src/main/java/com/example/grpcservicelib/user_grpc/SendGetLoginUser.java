@@ -133,12 +133,12 @@ public class SendGetLoginUser extends AsyncTask<Void, Void, Pengguna.penggunaDat
         }
 
         if (_instance.listener != null){
-            _instance.listener.onGetLoginUser(UserDataModelCasting.toUserDataModel(userData));
+            _instance.listener.onGetLoginUser(userData == null ? 0 : userData.getIdPengguna());
         }
     }
 
     public interface OnSendGetLoginUserListener {
         void onErrorGetLoginUser(@NonNull List<String> errors);
-        void onGetLoginUser(@NonNull UserDataModel user);
+        void onGetLoginUser(@NonNull Long idUser);
     }
 }

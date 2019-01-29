@@ -140,13 +140,13 @@ public class SendGetRegisterUser extends AsyncTask<Void, Void, Pengguna.pengguna
         }
 
         if (_instance.listener != null) {
-            _instance.listener.onGetRegisterUser(userData == null ? 0 : userData.getIdPengguna());
+            _instance.listener.onGetRegisterUser(userData == null ? "" : userData.getEmail());
         }
     }
 
     public interface OnSendGetRegisterUserListener {
         void onErrorGetRegisterUser(@NonNull List<String> errors);
 
-        void onGetRegisterUser(@NonNull Long idTransaction);
+        void onGetRegisterUser(@NonNull String email);
     }
 }

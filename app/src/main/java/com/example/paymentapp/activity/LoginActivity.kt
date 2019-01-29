@@ -1,21 +1,29 @@
 package com.example.paymentapp.activity
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.example.grpcservicelib.user_grpc.SendGetLoginUser
+import com.example.modellib.StaticVariable
 import com.example.modellib.networkConfig.NetworkConfig
-import com.example.modellib.user.UserDataModel
+import com.example.paymentapp.MainActivity
 import com.example.paymentapp.R
 import kotlinx.android.synthetic.main.activity_login.*
 import com.example.paymentapp.res.AESCrypt
+import com.example.paymentapp.res.SharedPrefManager
 
 class LoginActivity : AppCompatActivity(),
     View.OnClickListener,
     SendGetLoginUser.OnSendGetLoginUserListener{
 
+    lateinit var context : Context
     var errorsLog = ""
-    private val networkConfig = NetworkConfig.newBuilder().setUrl("192.168.43.95").setPort(8000)
+    private val networkConfig = NetworkConfig.newBuilder().setUrl(StaticVariable.URL)
+        .setPort(StaticVariable.PORT)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,8 +31,10 @@ class LoginActivity : AppCompatActivity(),
         initiationWidget()
     }
 
-    fun initiationWidget(){
+    private fun initiationWidget(){
+        context = this@LoginActivity
         buttonLogin.setOnClickListener(this)
+        textViewRegister.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -32,38 +42,54 @@ class LoginActivity : AppCompatActivity(),
             buttonLogin -> {
                 loginUser()
             }
+            textViewRegister -> {
+                startActivityForResult(Intent(this, RegisterActivity::class.java), 123)
+            }
         }
-
-        errorsLog = ""
     }
 
-    fun showError(errors: MutableList<String>){
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 123 && resultCode == Activity.RESULT_OK){
+            editTextEmailProfile.setText(data!!.getStringExtra("Email"))
+        }
+    }
+
+    private fun showError(errors: MutableList<String>){
         for (error in errors) {
             errorsLog += error + "\n"
         }
 
-        textView50.text = if (errorsLog != "") errorsLog else "No Error, data is Ok"
+        if (errorsLog != ""){
+            Toast.makeText(this,errorsLog, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onErrorGetLoginUser(errors: MutableList<String>) {
         showError(errors)
     }
 
-    override fun onGetLoginUser(user: UserDataModel) {
-        var datas = "User data\n"
-        datas += "${user.IdPengguna}\n"
-        datas += "${user.NamaPengguna}\n"
-        datas += "\n"
-        textViewRegister.text =  datas
+    override fun onGetLoginUser(idUser : Long) {
+        if (idUser != 0L){
+            saveSession(idUser)
+        }
     }
 
-    fun loginUser(){
-        var password = AESCrypt.encrypt("1234567890")
+    private fun loginUser(){
         SendGetLoginUser.newBuilder()
-            .setEmailPassword("grandeariana@gmail.com", password)
+            .setEmailPassword(editTextEmailProfile.text.toString(),
+                AESCrypt.encrypt(editTextPasswordRegister.text.toString()))
             .setNetworkConfig(networkConfig)
             .setKey("x9O1LkXjyxpRiyhNRX8T", "auth5cur3")
             .setOnSendGetLoginUserListener(this)
             .send()
+    }
+
+    private fun saveSession(idUser: Long){
+
+        SharedPrefManager.setLoggedIn(context, true)
+        SharedPrefManager.setID(context, idUser)
+        startActivity(Intent(context, MainActivity::class.java))
+        finish()
     }
 }

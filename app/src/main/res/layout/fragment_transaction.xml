@@ -71,7 +71,7 @@
                     android:background="@drawable/custom_button" android:textSize="18sp"
                     android:textColor="@android:color/background_light"/>
             <TextView
-                    android:text="ID Penerima :"
+                    android:text="Total Bayar :"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content" android:id="@+id/textView5"
                     android:textColor="@android:color/background_dark"

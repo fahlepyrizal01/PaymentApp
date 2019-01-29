@@ -26,80 +26,81 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
                     android:ems="10"
-                    android:id="@+id/editTextFullName"
+                    android:id="@+id/editTextFullNameRegister"
                     android:layout_marginTop="24dp"
                     app:layout_constraintTop_toBottomOf="@+id/imageView2" android:hint="Nama Lengkap"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginEnd="32dp" app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginStart="32dp" android:background="@drawable/custom_edit_text"
-                    android:textSize="24sp" android:padding="10dp"/>
+                    android:textSize="18sp" android:padding="10dp"/>
             <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:id="@+id/editTextEmailProfile"
+                    android:id="@+id/editTextEmailRegister"
                     android:hint="Email"
                     android:background="@drawable/custom_edit_text"
-                    android:textSize="24sp" android:padding="10dp"
+                    android:textSize="18sp" android:padding="10dp"
                     android:layout_marginTop="16dp"
-                    app:layout_constraintTop_toBottomOf="@+id/editTextFullName"
-                    app:layout_constraintStart_toStartOf="@+id/editTextFullName"
-                    app:layout_constraintEnd_toEndOf="@+id/editTextFullName" android:inputType="textEmailAddress"/>
+                    app:layout_constraintTop_toBottomOf="@+id/editTextFullNameRegister"
+                    app:layout_constraintStart_toStartOf="@+id/editTextFullNameRegister"
+                    app:layout_constraintEnd_toEndOf="@+id/editTextFullNameRegister" android:inputType="textEmailAddress"/>
             <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:id="@+id/editTextPhoneNumberProfile"
+                    android:id="@+id/editTextPhoneNumberRegister"
                     android:hint="Nomor Telepon"
                     android:background="@drawable/custom_edit_text"
-                    android:textSize="24sp" android:padding="10dp"
-                    app:layout_constraintStart_toStartOf="@+id/editTextFullName"
-                    app:layout_constraintEnd_toEndOf="@+id/editTextFullName" app:layout_constraintHorizontal_bias="0.0"
-                    android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/editTextEmailProfile"
+                    android:textSize="18sp" android:padding="10dp"
+                    app:layout_constraintStart_toStartOf="@+id/editTextFullNameRegister"
+                    app:layout_constraintEnd_toEndOf="@+id/editTextFullNameRegister" app:layout_constraintHorizontal_bias="0.0"
+                    android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/editTextEmailRegister"
                     android:inputType="phone"/>
             <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:id="@+id/editTextPassword"
+                    android:id="@+id/editTextPasswordRegister"
                     android:hint="Password"
                     android:background="@drawable/custom_edit_text"
-                    android:textSize="24sp" android:padding="10dp"
-                    app:layout_constraintStart_toStartOf="@+id/editTextFullName"
-                    app:layout_constraintEnd_toEndOf="@+id/editTextFullName" app:layout_constraintHorizontal_bias="0.0"
-                    android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/editTextPhoneNumberProfile"
+                    android:textSize="18sp" android:padding="10dp"
+                    app:layout_constraintStart_toStartOf="@+id/editTextFullNameRegister"
+                    app:layout_constraintEnd_toEndOf="@+id/editTextFullNameRegister" app:layout_constraintHorizontal_bias="0.0"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextPhoneNumberRegister"
                     android:inputType="textPassword"/>
             <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:id="@+id/editTextAddress"
+                    android:id="@+id/editTextAddressRegister"
                     android:hint="Alamat"
                     android:background="@drawable/custom_edit_text"
-                    android:textSize="24sp" android:padding="10dp"
-                    app:layout_constraintStart_toStartOf="@+id/editTextFullName"
-                    app:layout_constraintEnd_toEndOf="@+id/editTextFullName" app:layout_constraintHorizontal_bias="0.0"
+                    android:textSize="18sp" android:padding="10dp"
+                    app:layout_constraintStart_toStartOf="@+id/editTextFullNameRegister"
+                    app:layout_constraintEnd_toEndOf="@+id/editTextFullNameRegister" app:layout_constraintHorizontal_bias="0.0"
                     android:inputType="textMultiLine" android:layout_marginTop="16dp"
-                    app:layout_constraintTop_toBottomOf="@+id/editTextPassword"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextPasswordRegister"
             />
             <Button
                     android:text="DAFTAR"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/buttonRegister"
-                    app:layout_constraintStart_toStartOf="@+id/editTextAddress"
-                    app:layout_constraintEnd_toEndOf="@+id/editTextAddress"
-                    android:background="@drawable/custom_button" android:textSize="24sp" android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/editTextAddressRegister"
+                    app:layout_constraintEnd_toEndOf="@+id/editTextAddressRegister"
+                    android:background="@drawable/custom_button" android:textSize="18sp" android:textStyle="bold"
                     android:textColor="@android:color/background_light" android:paddingBottom="15dp"
                     android:paddingRight="30dp" android:paddingLeft="30dp" android:paddingTop="15dp"
                     app:layout_constraintHorizontal_bias="0.505" android:layout_marginTop="32dp"
-                    app:layout_constraintTop_toBottomOf="@+id/editTextAddress"/>
+                    app:layout_constraintTop_toBottomOf="@+id/editTextAddressRegister"/>
             <TextView
                     android:text="Sudah punya akun?"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content" android:id="@+id/textView50" android:layout_marginBottom="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/buttonRegister"
-                    app:layout_constraintStart_toStartOf="parent" android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent" android:textSize="14sp"
                     android:textColor="@android:color/background_dark" android:textAlignment="textEnd"
                     app:layout_constraintEnd_toStartOf="@+id/textViewLogin" android:layout_marginTop="32dp"/>
             <TextView
@@ -110,7 +111,7 @@
                     app:layout_constraintTop_toTopOf="@+id/textView50"
                     app:layout_constraintBottom_toBottomOf="@+id/textView50" android:textAlignment="textStart"
                     app:layout_constraintStart_toEndOf="@+id/textView50" app:layout_constraintEnd_toEndOf="parent"
-                    android:textSize="18sp" android:paddingLeft="5dp"/>
+                    android:textSize="14sp" android:paddingLeft="5dp"/>
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>
