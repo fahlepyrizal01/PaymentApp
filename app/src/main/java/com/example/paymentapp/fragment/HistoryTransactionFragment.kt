@@ -27,6 +27,7 @@ class HistoryTransactionFragment : Fragment(),
 
 
     var errorsLog = ""
+    var datas = ""
     private lateinit var ctx : Context
     private val networkConfig = NetworkConfig.newBuilder().setUrl(StaticVariable.URL)
         .setPort(StaticVariable.PORT)
@@ -65,7 +66,14 @@ class HistoryTransactionFragment : Fragment(),
     }
 
     override fun onGetAllTransaction(transactions: ArrayList<TransactionDataModel>) {
-        setAdapter(transactions, ctx, recyclerViewHistoryTransaction)
+        for (data in transactions){
+            datas += "$data \n"
+        }
+        if (datas != ""){
+            setAdapter(transactions, ctx, recyclerViewHistoryTransaction)
+        }else{
+            textViewEmpty.visibility = View.VISIBLE
+        }
     }
 
     override fun onErrorGetAllTransaction(errors: MutableList<String>) {

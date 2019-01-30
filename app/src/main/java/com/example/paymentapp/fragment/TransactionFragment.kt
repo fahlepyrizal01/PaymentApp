@@ -1,11 +1,14 @@
 package com.example.paymentapp.fragment
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +25,12 @@ import kotlinx.android.synthetic.main.dialog_transaction_success.view.*
 import kotlinx.android.synthetic.main.fragment_transaction.*
 import java.text.SimpleDateFormat
 import java.util.*
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.single.PermissionListener
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.listener.PermissionRequest
 
 
 class TransactionFragment : Fragment(),
@@ -58,7 +67,7 @@ class TransactionFragment : Fragment(),
     override fun onClick(v: View?) {
         when (v){
             buttonScanQRCode -> {
-                startActivityForResult(Intent(ctx, ScanActivity::class.java), 123)
+                requestCameraPermission()
             }
             buttonPay -> {
                 addTransaction(SharedPrefManager.getIdUser(ctx))
@@ -110,6 +119,7 @@ class TransactionFragment : Fragment(),
             .send()
     }
 
+    @SuppressLint("InflateParams")
     private fun showDialogSuccess(context : Context){
 
         dialog = AlertDialog.Builder(context).create()
@@ -122,6 +132,7 @@ class TransactionFragment : Fragment(),
         dialog.show()
     }
 
+    @SuppressLint("InflateParams")
     private fun showDialogFailed(context : Context){
 
         dialog = AlertDialog.Builder(context).create()
@@ -134,4 +145,57 @@ class TransactionFragment : Fragment(),
         dialog.show()
     }
 
+    private fun requestCameraPermission() {
+        Dexter.withActivity(ctx as Activity)
+            .withPermission(Manifest.permission.CAMERA)
+            .withListener(object : PermissionListener {
+                override fun onPermissionGranted(response: PermissionGrantedResponse) {
+                    startActivityForResult(Intent(ctx, ScanActivity::class.java), 123)
+                }
+
+                override fun onPermissionDenied(response: PermissionDeniedResponse) {
+                    if (response.isPermanentlyDenied) {
+                        showSettingsDialogAccess()
+                    }else {
+                        showSettingsDialogWarning()
+                    }
+                }
+
+                override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest, token: PermissionToken) {
+                    token.continuePermissionRequest()
+                }
+            }).check()
+    }
+
+    private fun showSettingsDialogWarning() {
+        val builder = AlertDialog.Builder(ctx)
+        builder.setMessage("Aplikasi ini membutuhkan akses camera untuk menjalankan fitur ini.")
+        builder.setNegativeButton(
+            "TUTUP"
+        ) { dialog, which -> dialog.cancel() }
+        builder.show()
+    }
+
+    private fun showSettingsDialogAccess() {
+        val builder = AlertDialog.Builder(ctx)
+        builder.setTitle("Butuh Hak Akses")
+        builder.setMessage("Aplikasi ini membutuhkan akses camera untuk menjalankan fitur ini. Kamu bisa memberikan " +
+                "aplikasi ini akses di pengaturan aplikasi.")
+        builder.setPositiveButton("PENGATURAN APLIKASI") { dialog, which ->
+            dialog.cancel()
+            openSettings()
+        }
+        builder.setNegativeButton(
+            "TUTUP"
+        ) { dialog, which -> dialog.cancel() }
+        builder.show()
+
+    }
+
+    private fun openSettings() {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        val uri = Uri.fromParts("package", (ctx as Activity).packageName, null)
+        intent.data = uri
+        startActivity(intent)
+    }
 }

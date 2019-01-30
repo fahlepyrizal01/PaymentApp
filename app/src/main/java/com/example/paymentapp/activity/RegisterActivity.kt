@@ -10,33 +10,49 @@ import android.widget.Toast
 import com.example.grpcservicelib.user_grpc.SendGetRegisterUser
 import com.example.modellib.StaticVariable
 import com.example.modellib.networkConfig.NetworkConfig
-import com.example.paymentapp.R
 import kotlinx.android.synthetic.main.activity_resgister.*
 import com.example.paymentapp.res.AESCrypt
+import android.app.DatePickerDialog
+import java.text.SimpleDateFormat
+import android.annotation.SuppressLint
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import java.util.*
+
 
 class RegisterActivity : AppCompatActivity(),
     View.OnClickListener,
-    SendGetRegisterUser.OnSendGetRegisterUserListener{
+    SendGetRegisterUser.OnSendGetRegisterUserListener,
+    RadioGroup.OnCheckedChangeListener {
 
     lateinit var context : Context
     var errorsLog = ""
+    private var datePickerDialog: DatePickerDialog? = null
+    private var dateFormatter: SimpleDateFormat? = null
     private val networkConfig = NetworkConfig.newBuilder().setUrl(StaticVariable.URL)
         .setPort(StaticVariable.PORT)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_resgister)
+        setContentView(com.example.paymentapp.R.layout.activity_resgister)
         initiationWidget()
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun initiationWidget(){
         context = this@RegisterActivity
+        dateFormatter = SimpleDateFormat("dd MM yyyy")
         buttonRegister.setOnClickListener(this)
         textViewLogin.setOnClickListener(this)
+        imageButtonDate.setOnClickListener(this)
+        radioGroupGender.setOnCheckedChangeListener(this)
     }
 
     override fun onClick(v: View?) {
         when (v){
+            imageButtonDate -> {
+                showDateDialog()
+            }
             buttonRegister -> {
                registerUser()
             }
@@ -46,6 +62,12 @@ class RegisterActivity : AppCompatActivity(),
             }
         }
     }
+
+    override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
+        val radio: RadioButton = findViewById(radioGroupGender.checkedRadioButtonId)
+        Toast.makeText(applicationContext,"On click : ${radio.text}", Toast.LENGTH_SHORT).show()
+    }
+
 
     private fun showError(errors: MutableList<String>){
         for (error in errors) {
@@ -69,16 +91,33 @@ class RegisterActivity : AppCompatActivity(),
     }
 
     private fun  registerUser(){
-        SendGetRegisterUser.newBuilder()
-            .setUserData(editTextFullNameRegister.text.toString(),
-                AESCrypt.encrypt(editTextPasswordRegister.text.toString()),
-                editTextPhoneNumberRegister.text.toString(), editTextAddressRegister.text.toString(),
-                editTextEmailRegister.text.toString(),
-                800000000f,
-                "https://i.pinimg.com/originals/f7/dc/81/f7dc818b5e1a008483c286b18308d03b.jpg")
-            .setNetworkConfig(networkConfig)
-            .setKey("x9O1LkXjyxpRiyhNRX8T", "auth5cur3")
-            .setOnSendGetRegisterUserListener(this)
-            .send()
+        if (editTextPasswordRegister.text != editTextRepasswordRegister.text){
+            Toast.makeText(this, "Kata Sandi tidak sesuai", Toast.LENGTH_SHORT).show()
+        }else{
+            SendGetRegisterUser.newBuilder()
+                .setUserData(editTextFullNameRegister.text.toString(),
+                    AESCrypt.encrypt(editTextPasswordRegister.text.toString()),
+                    editTextPhoneNumberRegister.text.toString(), editTextAddressRegister.text.toString(),
+                    editTextEmailRegister.text.toString(),
+                    800000000f,
+                    "https://i.pinimg.com/originals/f7/dc/81/f7dc818b5e1a008483c286b18308d03b.jpg")
+                .setNetworkConfig(networkConfig)
+                .setKey("x9O1LkXjyxpRiyhNRX8T", "auth5cur3")
+                .setOnSendGetRegisterUserListener(this)
+                .send()
+        }
+    }
+
+    private fun showDateDialog() {
+        val newCalendar = Calendar.getInstance()
+        datePickerDialog = DatePickerDialog(this,
+            DatePickerDialog.OnDateSetListener { view, dayOfMonth, monthOfYear, year ->
+
+                val newDate = Calendar.getInstance()
+                newDate.set(dayOfMonth, monthOfYear, year)
+                editTextDateofBirth.setText(dateFormatter!!.format(newDate.time))
+            }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH)
+        )
+        datePickerDialog!!.show()
     }
 }
