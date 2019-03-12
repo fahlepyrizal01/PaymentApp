@@ -9,8 +9,8 @@
         android:id="@+id/constraintLayout2">
     <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" tools:layout_editor_absoluteY="187dp"
-            tools:layout_editor_absoluteX="139dp">
+            android:layout_height="match_parent" tools:layout_editor_absoluteY="0dp"
+            tools:layout_editor_absoluteX="0dp">
         <android.support.constraint.ConstraintLayout android:layout_width="match_parent"
                                                      android:layout_height="wrap_content"
                                                      android:orientation="vertical">
@@ -76,6 +76,7 @@
                     android:ems="10"
                     android:id="@+id/editTextDateofBirth"
                     android:hint="Tanggal Lahir"
+                    android:enabled="false"
                     android:background="@drawable/custom_edit_text"
                     android:textSize="18sp" android:padding="10dp"
                     app:layout_constraintEnd_toStartOf="@id/imageButtonDate"

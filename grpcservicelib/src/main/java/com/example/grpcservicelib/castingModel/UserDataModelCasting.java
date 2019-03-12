@@ -16,7 +16,8 @@ public class UserDataModelCasting {
             model.Alamat = userData.getAlamat();
             model.Email = userData.getEmail();
             model.Balance = userData.getBalance();
-            model.UrlFotoProfil = userData.getUrlFotoProfil();
+            model.JenisKelamin = userData.getJenisKelamin();
+            model.TanggalLahir = userData.getTanggalLahir();
 
 
         }catch (NullPointerException e){
@@ -36,7 +37,8 @@ public class UserDataModelCasting {
                 .setAlamat(userData.Alamat)
                 .setEmail(userData.Email)
                 .setBalance(userData.Balance)
-                .setUrlFotoProfil(userData.UrlFotoProfil)
+                .setJenisKelamin(userData.JenisKelamin)
+                .setTanggalLahir(userData.TanggalLahir)
                 .build();
     }
 }

@@ -48,6 +48,7 @@ class HistoryTransactionFragment : Fragment(),
     private fun initiationWidget(v: View) {
         ctx = activity as Activity
         getAllTransaction(SharedPrefManager.getIdUser(ctx))
+        swipeRefreshLayoutHistoryTransaction.setOnRefreshListener(this)
     }
 
     override fun onRefresh() {

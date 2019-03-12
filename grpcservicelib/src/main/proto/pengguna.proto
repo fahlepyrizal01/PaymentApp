@@ -16,6 +16,7 @@ message penggunaData {
     string alamat = 5;
     string email = 6;
     float balance = 7;
-    string url_foto_profil = 8;
-    repeated string errors_message = 9;
+    string jenis_kelamin = 8;
+    string tanggal_lahir = 9;
+    repeated string errors_message = 10;
 }

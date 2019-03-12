@@ -48,14 +48,15 @@ public class SendGetRegisterUser extends AsyncTask<Void, Void, Pengguna.pengguna
     }
 
     public SendGetRegisterUser setUserData(String NameUser, String Password, String PhoneNumber, String Address,
-                                           String Email, Float Balance, String UrlProfilePicture) {
+                                           String Email, Float Balance, String Gender, String BirthDay) {
         _instance.userDataModel.NamaPengguna = NameUser;
         _instance.userDataModel.Password = Password;
         _instance.userDataModel.NomorTelepon = PhoneNumber;
         _instance.userDataModel.Alamat = Address;
         _instance.userDataModel.Email = Email;
         _instance.userDataModel.Balance = Balance;
-        _instance.userDataModel.UrlFotoProfil = UrlProfilePicture;
+        _instance.userDataModel.JenisKelamin = Gender;
+        _instance.userDataModel.TanggalLahir = BirthDay;
         return _instance;
     }
 

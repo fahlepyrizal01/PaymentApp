@@ -1,20 +1,14 @@
 package com.example.paymentapp.adapter
 
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.TextView
 import com.example.modellib.transaction.TransactionDataModel
 import com.example.paymentapp.R
-import com.squareup.picasso.Picasso
 import java.text.DecimalFormat
 import java.util.*
 

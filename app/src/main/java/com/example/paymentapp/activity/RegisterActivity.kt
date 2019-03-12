@@ -27,6 +27,7 @@ class RegisterActivity : AppCompatActivity(),
 
     lateinit var context : Context
     var errorsLog = ""
+    var gender = ""
     private var datePickerDialog: DatePickerDialog? = null
     private var dateFormatter: SimpleDateFormat? = null
     private val networkConfig = NetworkConfig.newBuilder().setUrl(StaticVariable.URL)
@@ -65,7 +66,7 @@ class RegisterActivity : AppCompatActivity(),
 
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
         val radio: RadioButton = findViewById(radioGroupGender.checkedRadioButtonId)
-        Toast.makeText(applicationContext,"On click : ${radio.text}", Toast.LENGTH_SHORT).show()
+        gender = radio.text.toString()
     }
 
 
@@ -91,7 +92,7 @@ class RegisterActivity : AppCompatActivity(),
     }
 
     private fun  registerUser(){
-        if (editTextPasswordRegister.text != editTextRepasswordRegister.text){
+        if (editTextPasswordRegister.text.toString() != editTextRepasswordRegister.text.toString()){
             Toast.makeText(this, "Kata Sandi tidak sesuai", Toast.LENGTH_SHORT).show()
         }else{
             SendGetRegisterUser.newBuilder()
@@ -100,7 +101,7 @@ class RegisterActivity : AppCompatActivity(),
                     editTextPhoneNumberRegister.text.toString(), editTextAddressRegister.text.toString(),
                     editTextEmailRegister.text.toString(),
                     800000000f,
-                    "https://i.pinimg.com/originals/f7/dc/81/f7dc818b5e1a008483c286b18308d03b.jpg")
+                    gender, editTextDateofBirth.text.toString())
                 .setNetworkConfig(networkConfig)
                 .setKey("x9O1LkXjyxpRiyhNRX8T", "auth5cur3")
                 .setOnSendGetRegisterUserListener(this)

@@ -15,8 +15,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.grpcservicelib.transaction_grpc.SendGetAddTransaction
+import com.example.grpcservicelib.user_grpc.SendGetOneUser
 import com.example.modellib.StaticVariable
 import com.example.modellib.networkConfig.NetworkConfig
+import com.example.modellib.user.UserDataModel
 import com.example.paymentapp.R
 import com.example.paymentapp.activity.ScanActivity
 import com.example.paymentapp.res.SharedPrefManager
@@ -31,10 +33,13 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.single.PermissionListener
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.listener.PermissionRequest
+import kotlinx.android.synthetic.main.dialog_detail_transaction.view.*
+import java.text.DecimalFormat
 
 
 class TransactionFragment : Fragment(),
     View.OnClickListener,
+    SendGetOneUser.OnSendGetOneUserListener,
     SendGetAddTransaction.OnSendGetAddTransactionListener{
 
     var errorsLog = ""
@@ -70,7 +75,7 @@ class TransactionFragment : Fragment(),
                 requestCameraPermission()
             }
             buttonPay -> {
-                addTransaction(SharedPrefManager.getIdUser(ctx))
+                getOneUser(java.lang.Long.parseLong(editTextIDReceiver.text.toString()))
             }
         }
     }
@@ -90,6 +95,25 @@ class TransactionFragment : Fragment(),
         if (errorsLog != ""){
             Toast.makeText(activity,errorsLog, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onErrorGetOneUser(errors: MutableList<String>) {
+        showError(errors)
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun onGetOneUser(user: UserDataModel) {
+        showDialogDetailTransactionTemporary(user.IdPengguna, user.NamaPengguna,
+            java.lang.Float.parseFloat(editTextNominal.text.toString()))
+    }
+
+    private fun getOneUser(idUser : Long){
+        SendGetOneUser.newBuilder()
+            .setIdPengguna(idUser)
+            .setNetworkConfig(networkConfig)
+            .setKey("x9O1LkXjyxpRiyhNRX8T", "auth5cur3")
+            .setOnSendGetOneUserListener(this)
+            .send()
     }
 
     override fun onErrorGetAddTransaction(errors: MutableList<String>) {
@@ -197,5 +221,26 @@ class TransactionFragment : Fragment(),
         val uri = Uri.fromParts("package", (ctx as Activity).packageName, null)
         intent.data = uri
         startActivity(intent)
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun showDialogDetailTransactionTemporary(idReceiver: Long, nameReceiver: String, total: Float){
+        val dialog = AlertDialog.Builder(ctx).create()
+        inflater = layoutInflater
+        dialogView = inflater.inflate(R.layout.dialog_detail_transaction, null)
+        dialog.setView(dialogView)
+        dialogView.textViewIDReceiverDetail.text = idReceiver.toString()
+        dialogView.textViewFullNameReceiverDetail.text = nameReceiver
+        val formatter = DecimalFormat("#,###,###")
+        val totalPay = formatter.format(total)
+        dialogView.textViewTotalPayDetail.text = "Rp. $totalPay"
+        dialogView.buttonPayDetail.setOnClickListener{
+            dialog.dismiss()
+            addTransaction(SharedPrefManager.getIdUser(ctx))
+        }
+        dialogView.buttonCancelDetail.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 }

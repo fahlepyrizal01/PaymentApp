@@ -33,9 +33,14 @@ public class UserDataModel {
     @Expose
     public Float Balance = 0f;
 
-    @SerializedName("url_foto_profil")
+    @SerializedName("jenis_kelamin")
     @Expose
-    public String UrlFotoProfil = "";
+    public String JenisKelamin = "";
+
+    @SerializedName("tanggal_lahir")
+    @Expose
+    public String TanggalLahir = "";
+
 
     public UserDataModel() {
         super();
