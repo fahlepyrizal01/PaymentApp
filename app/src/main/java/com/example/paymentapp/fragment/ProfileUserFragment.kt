@@ -131,11 +131,13 @@ class ProfileUserFragment : Fragment(),
 
     private fun showError(errors: MutableList<String>){
         for (error in errors) {
-            errorsLog += error + "\n"
+            if (error != ""){
+                errorsLog += error + "\n"
+            }
         }
 
-        if (errorsLog != null){
-            Toast.makeText(activity,errorsLog, Toast.LENGTH_SHORT).show()
+        if (errorsLog != ""){
+            Toast.makeText(ctx,errorsLog, Toast.LENGTH_SHORT).show()
         }
     }
 

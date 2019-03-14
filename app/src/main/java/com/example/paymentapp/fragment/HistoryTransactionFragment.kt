@@ -58,11 +58,13 @@ class HistoryTransactionFragment : Fragment(),
 
     private fun showError(errors: MutableList<String>){
         for (error in errors) {
-            errorsLog += error + "\n"
+            if (error != ""){
+                errorsLog += error + "\n"
+            }
         }
 
         if (errorsLog != ""){
-            Toast.makeText(activity,errorsLog, Toast.LENGTH_SHORT).show()
+            Toast.makeText(ctx,errorsLog, Toast.LENGTH_SHORT).show()
         }
     }
 

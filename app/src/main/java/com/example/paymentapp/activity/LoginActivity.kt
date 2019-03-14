@@ -57,7 +57,9 @@ class LoginActivity : AppCompatActivity(),
 
     private fun showError(errors: MutableList<String>){
         for (error in errors) {
-            errorsLog += error + "\n"
+            if (error != ""){
+                errorsLog += error + "\n"
+            }
         }
 
         if (errorsLog != ""){
