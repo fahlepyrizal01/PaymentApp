@@ -26,8 +26,8 @@ class RegisterActivity : AppCompatActivity(),
     RadioGroup.OnCheckedChangeListener {
 
     lateinit var context : Context
-    var errorsLog = ""
-    var gender = ""
+    private var errorsLog = ""
+    private var gender = ""
     private var datePickerDialog: DatePickerDialog? = null
     private var dateFormatter: SimpleDateFormat? = null
     private val networkConfig = NetworkConfig.newBuilder().setUrl(StaticVariable.URL)
@@ -66,7 +66,7 @@ class RegisterActivity : AppCompatActivity(),
 
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
         val radio: RadioButton = findViewById(radioGroupGender.checkedRadioButtonId)
-        gender = radio.text.toString()
+        this.gender = radio.text.toString()
     }
 
 
@@ -114,7 +114,7 @@ class RegisterActivity : AppCompatActivity(),
     private fun showDateDialog() {
         val newCalendar = Calendar.getInstance()
         datePickerDialog = DatePickerDialog(this,
-            DatePickerDialog.OnDateSetListener { view, dayOfMonth, monthOfYear, year ->
+            DatePickerDialog.OnDateSetListener { _, dayOfMonth, monthOfYear, year ->
 
                 val newDate = Calendar.getInstance()
                 newDate.set(dayOfMonth, monthOfYear, year)

@@ -36,10 +36,10 @@ class ProfileUserFragment : Fragment(),
     View.OnClickListener,
     SendGetOneUser.OnSendGetOneUserListener{
 
-    var errorsLog = ""
-    lateinit var dialogView: View
-    lateinit var inflater: LayoutInflater
-    lateinit var ctx : Context
+    private var errorsLog = ""
+    private lateinit var dialogView: View
+    private lateinit var inflater: LayoutInflater
+    private lateinit var ctx : Context
     private val networkConfig = NetworkConfig.newBuilder().setUrl(StaticVariable.URL)
         .setPort(StaticVariable.PORT)
 
@@ -48,7 +48,7 @@ class ProfileUserFragment : Fragment(),
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initiationWidget(view)
+        initiationWidget()
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -56,7 +56,7 @@ class ProfileUserFragment : Fragment(),
         return inflater.inflate(com.example.paymentapp.R.layout.fragment_profile_user, container, false)
     }
 
-    private fun initiationWidget(v: View) {
+    private fun initiationWidget() {
         imageButtonSetting.setOnClickListener(this)
         buttonLogout.setOnClickListener(this)
         imageButtonTopUp.setOnClickListener(this)
@@ -111,7 +111,7 @@ class ProfileUserFragment : Fragment(),
         editTextPhoneNumberProfile.setText(user.NomorTelepon)
         editTextAddressProfile.setText(user.Alamat)
 
-        var drawable = TextDrawable.builder()
+        val drawable = TextDrawable.builder()
             .beginConfig()
             .withBorder(4)
             .bold()
@@ -190,7 +190,7 @@ class ProfileUserFragment : Fragment(),
         builder.setMessage("Ini adalah contoh penerapan GRPC pada aplikasi payment berbasis android.")
         builder.setNegativeButton(
             "TUTUP"
-        ) { dialog, which -> dialog.cancel() }
+        ) { dialog, _ -> dialog.cancel() }
         builder.show()
     }
 

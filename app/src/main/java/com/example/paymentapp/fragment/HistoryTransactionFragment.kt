@@ -26,8 +26,8 @@ class HistoryTransactionFragment : Fragment(),
     SendGetAllTransaction.OnSendGetAllTransactionListener{
 
 
-    var errorsLog = ""
-    var datas = ""
+    private var errorsLog = ""
+    private var datas = ""
     private lateinit var ctx : Context
     private val networkConfig = NetworkConfig.newBuilder().setUrl(StaticVariable.URL)
         .setPort(StaticVariable.PORT)
@@ -37,7 +37,7 @@ class HistoryTransactionFragment : Fragment(),
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initiationWidget(view)
+        initiationWidget()
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -45,7 +45,7 @@ class HistoryTransactionFragment : Fragment(),
         return inflater.inflate(R.layout.fragment_history_transaction, container, false)
     }
 
-    private fun initiationWidget(v: View) {
+    private fun initiationWidget() {
         ctx = activity as Activity
         getAllTransaction(SharedPrefManager.getIdUser(ctx))
         swipeRefreshLayoutHistoryTransaction.setOnRefreshListener(this)

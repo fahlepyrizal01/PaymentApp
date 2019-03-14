@@ -21,7 +21,7 @@ class LoginActivity : AppCompatActivity(),
     SendGetLoginUser.OnSendGetLoginUserListener{
 
     lateinit var context : Context
-    var errorsLog = ""
+    private var errorsLog = ""
     private val networkConfig = NetworkConfig.newBuilder().setUrl(StaticVariable.URL)
         .setPort(StaticVariable.PORT)
 

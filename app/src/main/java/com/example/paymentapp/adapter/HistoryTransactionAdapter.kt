@@ -12,7 +12,7 @@ import com.example.paymentapp.R
 import java.text.DecimalFormat
 import java.util.*
 
-class HistoryTransactionAdapter(private val context: Context, var listTransactionData : ArrayList<TransactionDataModel>):
+class HistoryTransactionAdapter(private val context: Context, private var listTransactionData : ArrayList<TransactionDataModel>):
     RecyclerView.Adapter<HistoryTransactionAdapter.ViewHolder>() {
 
 

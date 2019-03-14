@@ -42,11 +42,11 @@ class TransactionFragment : Fragment(),
     SendGetOneUser.OnSendGetOneUserListener,
     SendGetAddTransaction.OnSendGetAddTransactionListener{
 
-    var errorsLog = ""
-    lateinit var dialog: AlertDialog
-    lateinit var dialogView: View
-    lateinit var inflater: LayoutInflater
-    lateinit var ctx : Context
+    private var errorsLog = ""
+    private lateinit var dialog: AlertDialog
+    private lateinit var dialogView: View
+    private lateinit var inflater: LayoutInflater
+    private lateinit var ctx : Context
     private val networkConfig = NetworkConfig.newBuilder().setUrl(StaticVariable.URL)
         .setPort(StaticVariable.PORT)
 
@@ -55,7 +55,7 @@ class TransactionFragment : Fragment(),
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initiationWidget(view)
+        initiationWidget()
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -63,7 +63,7 @@ class TransactionFragment : Fragment(),
         return inflater.inflate(R.layout.fragment_transaction, container, false)
     }
 
-    private fun initiationWidget(v: View) {
+    private fun initiationWidget() {
         buttonScanQRCode.setOnClickListener(this)
         buttonPay.setOnClickListener(this)
         ctx = activity as Activity
@@ -198,7 +198,7 @@ class TransactionFragment : Fragment(),
         builder.setMessage("Aplikasi ini membutuhkan akses camera untuk menjalankan fitur ini.")
         builder.setNegativeButton(
             "TUTUP"
-        ) { dialog, which -> dialog.cancel() }
+        ) { dialog, _ -> dialog.cancel() }
         builder.show()
     }
 
@@ -207,13 +207,13 @@ class TransactionFragment : Fragment(),
         builder.setTitle("Butuh Hak Akses")
         builder.setMessage("Aplikasi ini membutuhkan akses camera untuk menjalankan fitur ini. Kamu bisa memberikan " +
                 "aplikasi ini akses di pengaturan aplikasi.")
-        builder.setPositiveButton("PENGATURAN APLIKASI") { dialog, which ->
+        builder.setPositiveButton("PENGATURAN APLIKASI") { dialog, _ ->
             dialog.cancel()
             openSettings()
         }
         builder.setNegativeButton(
             "TUTUP"
-        ) { dialog, which -> dialog.cancel() }
+        ) { dialog, _ -> dialog.cancel() }
         builder.show()
 
     }
@@ -225,7 +225,7 @@ class TransactionFragment : Fragment(),
         startActivity(intent)
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "InflateParams")
     private fun showDialogDetailTransactionTemporary(idReceiver: Long, nameReceiver: String, total: Float){
         val dialog = AlertDialog.Builder(ctx).create()
         inflater = layoutInflater
