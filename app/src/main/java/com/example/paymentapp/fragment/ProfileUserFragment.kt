@@ -37,7 +37,6 @@ class ProfileUserFragment : Fragment(),
     SendGetOneUser.OnSendGetOneUserListener{
 
     var errorsLog = ""
-    var bulan = ""
     lateinit var dialogView: View
     lateinit var inflater: LayoutInflater
     lateinit var ctx : Context
@@ -148,9 +147,6 @@ class ProfileUserFragment : Fragment(),
         builder.setView(dialogView)
         showQRCode(idUser, dialogView.imageViewQRCode)
         dialogView.textViewIDUser.text = idUser.toString()
-        builder.setNegativeButton(
-            "TUTUP"
-        ) { dialog, which -> dialog.cancel() }
         builder.show()
     }
 
@@ -200,9 +196,6 @@ class ProfileUserFragment : Fragment(),
         val builder = AlertDialog.Builder(ctx)
         builder.setMessage("Ini adalah contoh aplikasi penerapan teknologi GRPC. Untuk melakukan pengisian saldo " +
                 "pengguna harus meminta kepada admin aplikasi saat ini.")
-        builder.setNegativeButton(
-            "TUTUP"
-        ) { dialog, which -> dialog.cancel() }
         builder.show()
     }
 }
