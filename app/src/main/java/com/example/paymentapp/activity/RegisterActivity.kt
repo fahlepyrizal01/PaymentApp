@@ -100,10 +100,10 @@ class RegisterActivity : AppCompatActivity(),
                     AESCrypt.encrypt(editTextPasswordRegister.text.toString()),
                     editTextPhoneNumberRegister.text.toString(), editTextAddressRegister.text.toString(),
                     editTextEmailRegister.text.toString(),
-                    800000000f,
+                    0f,
                     gender, editTextDateofBirth.text.toString())
                 .setNetworkConfig(networkConfig)
-                .setKey("x9O1LkXjyxpRiyhNRX8T", "auth5cur3")
+                .setKey("ABCDE12345", "p4ym3nt")
                 .setOnSendGetRegisterUserListener(this)
                 .send()
         }

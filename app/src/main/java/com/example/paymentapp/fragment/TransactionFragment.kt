@@ -138,7 +138,7 @@ class TransactionFragment : Fragment(),
                 java.lang.Float.parseFloat(editTextNominal.text.toString()),
                 sdf.format(cal.time))
             .setNetworkConfig(networkConfig)
-            .setKey("x9O1LkXjyxpRiyhNRX8T", "auth5cur3")
+            .setKey("ABCDE12345", "p4ym3nt")
             .setOnSendGetAddTransactionListener(this)
             .send()
     }

@@ -85,7 +85,7 @@ class HistoryTransactionFragment : Fragment(),
         SendGetAllTransaction.newBuilder()
             .setIdPengguna(idUser)
             .setNetworkConfig(networkConfig)
-            .setKey("x9O1LkXjyxpRiyhNRX8T", "auth5cur3")
+            .setKey("ABCDE12345", "p4ym3nt")
             .setOnSendGetAllTransactionListener(this)
             .send()
     }

@@ -80,7 +80,7 @@ class LoginActivity : AppCompatActivity(),
             .setEmailPassword(editTextEmailProfile.text.toString(),
                 AESCrypt.encrypt(editTextPasswordRegister.text.toString()))
             .setNetworkConfig(networkConfig)
-            .setKey("x9O1LkXjyxpRiyhNRX8T", "auth5cur3")
+            .setKey("ABCDE12345", "p4ym3nt")
             .setOnSendGetLoginUserListener(this)
             .send()
     }
