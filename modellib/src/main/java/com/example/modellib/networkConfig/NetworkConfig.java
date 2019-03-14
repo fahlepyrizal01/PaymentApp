@@ -5,7 +5,7 @@ public class NetworkConfig {
     private String url = "";
     private int port = 0;
 
-    static NetworkConfig instance;
+    private static NetworkConfig instance;
 
     public static NetworkConfig newBuilder(){
         instance = new NetworkConfig();

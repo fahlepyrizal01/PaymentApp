@@ -7,15 +7,15 @@ public class TransactionDataModel {
 
     @SerializedName("id_transaksi")
     @Expose
-    public Long IdTransaksi = 0l;
+    public Long IdTransaksi = 0L;
 
     @SerializedName("id_pengirim")
     @Expose
-    public Long IdPengirim = 0l;
+    public Long IdPengirim = 0L;
 
     @SerializedName("id_penerima")
     @Expose
-    public Long IdPenerima = 0l;
+    public Long IdPenerima = 0L;
 
     @SerializedName("nominal")
     @Expose

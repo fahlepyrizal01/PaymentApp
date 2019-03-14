@@ -7,7 +7,7 @@ public class UserDataModel {
 
     @SerializedName("id_pengguna")
     @Expose
-    public Long IdPengguna = 0l;
+    public Long IdPengguna = 0L;
 
     @SerializedName("nama_pengguna")
     @Expose
